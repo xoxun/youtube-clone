@@ -1,12 +1,17 @@
 import express from "express";
-import {see,edit,upload, deleteVideo} from "../controllers/videoController";
+import {
+    watch,
+    getEdit,
+    postEdit,
+    getUpload,
+    postUpload,
+
+} from "../controllers/videoController";
 
 const videoRouter = express.Router();
 
-videoRouter.get("/upload", upload);  //맨 위에 두는 이유는 upload를 id로 착각할 수 있음
-videoRouter.get("/:id", see);
-videoRouter.get("/:id/edit", edit);  // '/video/edit' 이 아니라 그냥 /edit
-videoRouter.get("/:id/delte", deleteVideo);
-
+videoRouter.get("/:id(\\d+)", watch);
+videoRouter.route("/:id(\\d+)/edit").get(getEdit).post(postEdit);
+videoRouter.route("/upload").get(getUpload).post(postUpload);
 
 export default videoRouter;
